@@ -2,7 +2,7 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-Loads an AngelCode BMFont file from XHR (in browser) and fs (in Node), returning a [JSON representation](https://github.com/mattdesl/bmfont2json).
+Loads an [AngelCode BMFont](http://www.angelcode.com/products/bmfont/) file from XHR (in browser) and fs (in Node), returning a [JSON representation](https://github.com/mattdesl/bmfont2json).
 
 ```js
 var load = require('load-bmfont')
@@ -24,7 +24,15 @@ Currently supported BMFont formats:
 - ASCII (text)
 - JSON
 
-XML coming soon; first [parse-bmfont-xml](https://github.com/mattdesl/parse-bmfont-xml) needs to use a lightweight browser version. 
+XML coming soon; first [parse-bmfont-xml](https://www.npmjs.com/package/parse-bmfont-xml) needs to use a lightweight browser version. 
+
+Related modules:
+
+- [parse-bmfont-ascii](https://www.npmjs.com/package/parse-bmfont-ascii)
+- [parse-bmfont-xml](https://www.npmjs.com/package/parse-bmfont-xml)
+- [bmfont2json](https://www.npmjs.com/package/bmfont2json)
+- [bmfont-lato](https://www.npmjs.com/package/bmfont-lato)
+- [layout-bmfont-text](https://www.npmjs.com/package/layout-bmfont-text)
 
 ## Usage
 
