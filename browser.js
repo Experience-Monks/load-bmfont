@@ -1,6 +1,7 @@
 var xhr = require('xhr')
 var noop = function(){}
-var parse = require('parse-bmfont-ascii')
+var parseASCII = require('parse-bmfont-ascii')
+var parseXML = require('parse-bmfont-xml')
 
 module.exports = function(opt, cb) {
   cb = typeof cb === 'function' ? cb : noop
@@ -18,15 +19,18 @@ module.exports = function(opt, cb) {
     if (!body)
       return cb(new Error('no body result'))
 
-    //detect whether to use JSON or ASCII parsing
-    var useJSON = false
-    if (/json/.test(res.headers['content-type'])
-        || body.trim().charAt(0) === '{') 
-      useJSON = true  
-    
+    body = body.trim()
     var result
     try {
-      result = useJSON ? JSON.parse(body) : parse(body)
+      var type = res.headers['content-type']
+      if (/json/.test(type)
+          || body.charAt(0) === '{')
+        result = JSON.parse(body)
+      else if (/xml/.test(type) 
+          || body.charAt(0) === '<')
+        result = parseXML(body)
+      else
+        result = parseASCII(body)
     } catch (e) {
       cb(new Error('error parsing font '+e.message))
       cb = noop

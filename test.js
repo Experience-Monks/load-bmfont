@@ -1,6 +1,7 @@
 var test = require('tape')
 var load = require('./')
 var expected = require('./fnt/Lato-Regular-32.json')
+var expectedNexa = require('./fnt/NexaLight32.json')
 
 test('should load ASCII font', function(t) {
   t.plan(1)
@@ -8,6 +9,15 @@ test('should load ASCII font', function(t) {
     if (err) 
       t.fail(err)
     t.deepEqual(font, expected, 'matches expected JSON')
+  })
+})
+
+test('should load XML font', function(t) {
+  t.plan(1)
+  load('fnt/NexaLight32.fnt', function(err, font) {
+    if (err) 
+      t.fail(err)
+    t.deepEqual(font, expectedNexa, 'matches expected JSON')
   })
 })
 

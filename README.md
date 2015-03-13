@@ -23,8 +23,7 @@ Currently supported BMFont formats:
 
 - ASCII (text)
 - JSON
-
-XML coming soon; first [parse-bmfont-xml](https://www.npmjs.com/package/parse-bmfont-xml) needs to use a lightweight browser version. 
+- XML
 
 Related modules:
 
@@ -33,6 +32,7 @@ Related modules:
 - [bmfont2json](https://www.npmjs.com/package/bmfont2json)
 - [bmfont-lato](https://www.npmjs.com/package/bmfont-lato)
 - [layout-bmfont-text](https://www.npmjs.com/package/layout-bmfont-text)
+- [three-bmfont-text](https://www.npmjs.com/package/three-bmfont-text)
 
 ## Usage
 
