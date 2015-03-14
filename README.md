@@ -46,15 +46,16 @@ Related modules:
 Loads a BMFont file with the `opt` settings and fires the callback with `(err, font)` params once finished. If `opt` is a string, it is used as the URI. Otherwise the options can be:
 
 - `uri` or `url` the path (in Node) or URI (in the browser)
-- (node) options for `fs.readFile` such as `encoding`
-- (browser) options for [xhr](https://github.com/Raynos/xhr) such as `timeout`
+- `binary` boolean, whether the data should be read as binary, default false
+- (in node) options for `fs.readFile`
+- (in browser) options for [xhr](https://github.com/Raynos/xhr)
 
-To load binary files in the browser and Node, you should use `encoding: "binary"`. This will fall back to overriding mime types in browsers that do not support XMLHTTPRequest2.
+To support binary files in the browser and Node, you should use `binary: true`. Otherwise the XHR request might come in the form of a UTF8 string, which will not work with binary files. This also sets up the XHR object to override mime type in older browsers.
 
 ```js
 load({ 
   uri: 'fonts/Arial.bin', 
-  encoding: 'binary' 
+  binary: true
 }, function(err, font) {
   console.log(font)
 })

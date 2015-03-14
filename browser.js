@@ -18,7 +18,8 @@ module.exports = function(opt, cb) {
   else if (!opt)
     opt = {}
 
-  if (opt.encoding === 'binary')
+  var expectBinary = opt.binary
+  if (expectBinary)
     opt = getBinaryOpts(opt)
 
   xhr(opt, function(err, res, body) {
@@ -29,25 +30,31 @@ module.exports = function(opt, cb) {
     if (!body)
       return cb(new Error('no body result'))
 
-    var buffer = isArrayBuffer(body)
     var binary = false 
 
-    //check if the response type is ArrayBuffer
-    if (buffer) {
+    //if the response type is an array buffer,
+    //we need to convert it into a regular Buffer object
+    if (isArrayBuffer(body)) {
       var array = new Uint8Array(body)
-      body = new Buffer(array)
+      body = new Buffer(array, 'binary')
     }
 
-    //the string or Buffer has the correct header..
+    //now check the string/Buffer response
+    //and see if it has a binary BMF header
     if (isBinaryFormat(body)) {
-        binary = true
-      //create a new buffer from string
+      binary = true
+      //if we have a string, turn it into a Buffer
       if (typeof body === 'string') 
         body = new Buffer(body, 'binary')
-    }
+    } 
 
-    if (!binary)
-      body = body.toString(opt.encoding).trim()
+    //we are not parsing a binary format, just ASCII/XML/etc
+    if (!binary) {
+      //might still be a buffer if responseType is 'arraybuffer'
+      if (Buffer.isBuffer(body))
+        body = body.toString(opt.encoding)
+      body = body.trim()
+    }
 
     var result
     try {
@@ -79,7 +86,7 @@ function getBinaryOpts(opt) {
     return xtend(opt, { responseType: 'arraybuffer' })
   
   if (typeof window.XMLHttpRequest === 'undefined')
-    throw new Error('your browser cannot support binary XHR loading')
+    throw new Error('your browser does not support XHR loading')
 
   //IE9 and XML1 browsers could still use an override
   var req = new window.XMLHttpRequest()
