@@ -26,16 +26,9 @@ Currently supported BMFont formats:
 - XML
 - binary
 
-Related modules:
+## See Also
 
-- [parse-bmfont-ascii](https://www.npmjs.com/package/parse-bmfont-ascii)
-- [parse-bmfont-xml](https://www.npmjs.com/package/parse-bmfont-xml)
-- [read-bmfont-binary](https://www.npmjs.com/package/read-bmfont-binary)
-- [write-bmfont-binary](https://www.npmjs.com/package/write-bmfont-binary)
-- [bmfont2json](https://www.npmjs.com/package/bmfont2json)
-- [bmfont-lato](https://www.npmjs.com/package/bmfont-lato)
-- [layout-bmfont-text](https://www.npmjs.com/package/layout-bmfont-text)
-- [three-bmfont-text](https://www.npmjs.com/package/three-bmfont-text)
+See [text-modules](https://github.com/mattdesl/text-modules) for related modules.
 
 ## Usage
 
