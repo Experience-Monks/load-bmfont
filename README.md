@@ -24,11 +24,14 @@ Currently supported BMFont formats:
 - ASCII (text)
 - JSON
 - XML
+- binary
 
 Related modules:
 
 - [parse-bmfont-ascii](https://www.npmjs.com/package/parse-bmfont-ascii)
 - [parse-bmfont-xml](https://www.npmjs.com/package/parse-bmfont-xml)
+- [read-bmfont-binary](https://www.npmjs.com/package/read-bmfont-binary)
+- [write-bmfont-binary](https://www.npmjs.com/package/write-bmfont-binary)
 - [bmfont2json](https://www.npmjs.com/package/bmfont2json)
 - [bmfont-lato](https://www.npmjs.com/package/bmfont-lato)
 - [layout-bmfont-text](https://www.npmjs.com/package/layout-bmfont-text)
@@ -38,11 +41,24 @@ Related modules:
 
 [![NPM](https://nodei.co/npm/load-bmfont.png)](https://www.npmjs.com/package/load-bmfont)
 
-#### `load(path, cb)`
+#### `load(opt, cb)`
 
-Loads a BMFont file at the given `path` and fires the callback with `(err, font)` params once finished.
+Loads a BMFont file with the `opt` settings and fires the callback with `(err, font)` params once finished. If `opt` is a string, it is used as the URI. Otherwise the options can be:
 
-In browser this uses XHR, in Node this uses `fs.readFile`.
+- `uri` or `url` the path (in Node) or URI (in the browser)
+- (node) options for `fs.readFile` such as `encoding`
+- (browser) options for [xhr](https://github.com/Raynos/xhr) such as `responseType`
+
+**Note:** To support binary format in the browser, the responseType needs to be set to `"arraybuffer"`:
+
+```js
+load({ 
+  uri: 'Arial.bin', 
+  responseType: 'arraybuffer' 
+}, function(err, font) {
+  console.log(font)
+})
+```
 
 ## License
 

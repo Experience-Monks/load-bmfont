@@ -11,20 +11,23 @@
     "url": "https://github.com/mattdesl"
   },
   "dependencies": {
+    "an-array": "^1.0.0",
+    "buffer-equal": "0.0.1",
     "mime": "^1.3.4",
     "parse-bmfont-ascii": "^1.0.3",
     "parse-bmfont-xml": "^1.1.0",
+    "read-bmfont-binary": "^1.0.0",
     "xhr": "^2.0.1"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
-    "faucet": "0.0.1",
+    "tap-spec": "^2.2.2",
     "tape": "^3.5.0",
     "testling": "^1.7.1"
   },
   "scripts": {
-    "test-node": "node test.js | faucet",
-    "test-browser": "browserify test.js | testling | faucet",
+    "test-node": "node test.js | tap-spec",
+    "test-browser": "browserify test.js | testling | tap-spec",
     "test": "npm run test-node && npm run test-browser"
   },
   "keywords": [

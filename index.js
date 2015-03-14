@@ -2,17 +2,34 @@ var fs = require('fs')
 var path = require('path')
 var parseASCII = require('parse-bmfont-ascii')
 var parseXML = require('parse-bmfont-xml')
+var readBinary = require('read-bmfont-binary')
 var mime = require('mime')
 var noop = function(){}
+var isBinary = require('./lib/is-binary')
 
-module.exports = function loadFont(file, cb) {
-  fs.readFile(file, 'utf8', function(err, data) {
+module.exports = function loadFont(opt, cb) {
+  cb = typeof cb === 'function' ? cb : noop
+  if (typeof opt === 'string')
+    opt = { uri: opt }
+  else if (!opt)
+    opt = {}
+
+  var file = opt.uri || opt.url
+  fs.readFile(file, opt, function(err, data) {
     if (err) return cb(err)
 
-    data = data.trim()
-    var result
+    var result, binary
+    if (isBinary(data)) {
+      if (typeof data === 'string')
+        data = new Buffer(data, 'binary')
+      binary = true
+    } else 
+      data = data.toString().trim()
+
     try {
-      if (/json/.test(mime.lookup(file))
+      if (binary)
+        result = readBinary(data)
+      else if (/json/.test(mime.lookup(file))
           || data.charAt(0) === '{')
         result = JSON.parse(data)
       else if (/xml/.test(mime.lookup(file)) 
