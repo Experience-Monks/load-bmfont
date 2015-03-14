@@ -19,9 +19,7 @@ module.exports = function loadFont(opt, cb) {
     if (err) return cb(err)
 
     var result, binary
-    if (isBinary(data)) {
-      if (typeof data === 'string')
-        data = new Buffer(data, 'binary')
+    if (typeof data !== 'string' && isBinary(data)) {
       binary = true
     } else 
       data = data.toString().trim()

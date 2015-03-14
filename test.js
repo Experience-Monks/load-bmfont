@@ -33,7 +33,7 @@ test('should load JSON font', function(t) {
 
 test('should load binary font', function(t) {
   t.plan(4)
-  load({ url: 'fnt/Arial.bin', responseType: 'arraybuffer' }, function(err, font) {
+  load({ url: 'fnt/Arial.bin', encoding: 'binary' }, function(err, font) {
     if (err) 
       t.fail(err)
     t.deepEqual(font.info, expectedArial.info, 'matches expected JSON')
@@ -43,9 +43,9 @@ test('should load binary font', function(t) {
   })
 })
 
-test('should accept URI options', function(t) {
+test('should accept options', function(t) {
   t.plan(1)
-  load({ encoding: 'utf8', uri: 'fnt/Lato-Regular-32.fnt' }, function(err, font) {
+  load({ encoding: 'ascii', uri: 'fnt/Lato-Regular-32.fnt' }, function(err, font) {
     if (err) 
       t.fail(err)
     t.deepEqual(font, expectedLato, 'matches expected JSON')

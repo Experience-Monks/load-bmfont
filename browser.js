@@ -4,6 +4,11 @@ var parseASCII = require('parse-bmfont-ascii')
 var parseXML = require('parse-bmfont-xml')
 var readBinary = require('read-bmfont-binary')
 var isBinaryFormat = require('./lib/is-binary')
+var xtend = require('xtend')
+
+var xml2 = (function hasXML2() {
+  return window.XMLHttpRequest && "withCredentials" in new XMLHttpRequest
+})()
 
 module.exports = function(opt, cb) {
   cb = typeof cb === 'function' ? cb : noop
@@ -12,8 +17,10 @@ module.exports = function(opt, cb) {
     opt = { uri: opt }
   else if (!opt)
     opt = {}
-  
-  var response = opt.responseType
+
+  if (opt.encoding === 'binary')
+    opt = getBinaryOpts(opt)
+
   xhr(opt, function(err, res, body) {
     if (err)
       return cb(err)
@@ -33,19 +40,14 @@ module.exports = function(opt, cb) {
 
     //the string or Buffer has the correct header..
     if (isBinaryFormat(body)) {
-      //needs TextDecode, not yet supported
-      if (typeof body === 'string') {
-        throw new Error('for binary in browser, '+
-                  'use responseType: "arraybuffer"')
-      } 
-      //binary should work fine
-      else { 
         binary = true
-      }
+      //create a new buffer from string
+      if (typeof body === 'string') 
+        body = new Buffer(body, 'binary')
     }
 
     if (!binary)
-      body = body.toString('utf8').trim()
+      body = body.toString(opt.encoding).trim()
 
     var result
     try {
@@ -69,4 +71,20 @@ module.exports = function(opt, cb) {
 function isArrayBuffer(arr) {
   var str = Object.prototype.toString
   return str.call(arr) === '[object ArrayBuffer]'
+}
+
+function getBinaryOpts(opt) {
+  //IE10+ and other modern browsers support array buffers
+  if (xml2)
+    return xtend(opt, { responseType: 'arraybuffer' })
+  
+  if (typeof window.XMLHttpRequest === 'undefined')
+    throw new Error('your browser cannot support binary XHR loading')
+
+  //IE9 and XML1 browsers could still use an override
+  var req = new window.XMLHttpRequest()
+  req.overrideMimeType('text/plain; charset=x-user-defined')
+  return xtend({
+    xhr: req
+  }, opt)
 }
