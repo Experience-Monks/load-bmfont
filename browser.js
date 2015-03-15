@@ -2,7 +2,7 @@ var xhr = require('xhr')
 var noop = function(){}
 var parseASCII = require('parse-bmfont-ascii')
 var parseXML = require('parse-bmfont-xml')
-var readBinary = require('read-bmfont-binary')
+var readBinary = require('parse-bmfont-binary')
 var isBinaryFormat = require('./lib/is-binary')
 var xtend = require('xtend')
 
