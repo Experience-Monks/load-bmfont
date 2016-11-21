@@ -23,7 +23,7 @@ module.exports = function loadFont(opt, cb) {
       if (typeof data === 'string')
         data = new Buffer(data, 'binary')
       binary = true
-    } else 
+    } else
       data = data.toString().trim()
 
     try {
@@ -32,13 +32,13 @@ module.exports = function loadFont(opt, cb) {
       else if (/json/.test(mime.lookup(file))
           || data.charAt(0) === '{')
         result = JSON.parse(data)
-      else if (/xml/.test(mime.lookup(file)) 
+      else if (/xml/.test(mime.lookup(file))
           || data.charAt(0) === '<')
         result = parseXML(data)
       else
         result = parseASCII(data)
     } catch (e) {
-      cb(new Error('cannot parse font file '+e.message))
+      cb(e)
       cb = noop
     }
     cb(null, result)
