@@ -7,7 +7,7 @@ var isBinaryFormat = require('./lib/is-binary')
 var xtend = require('xtend')
 
 var xml2 = (function hasXML2() {
-  return window.XMLHttpRequest && "withCredentials" in new XMLHttpRequest
+  return self.XMLHttpRequest && "withCredentials" in new XMLHttpRequest
 })()
 
 module.exports = function(opt, cb) {
@@ -85,11 +85,11 @@ function getBinaryOpts(opt) {
   if (xml2)
     return xtend(opt, { responseType: 'arraybuffer' })
   
-  if (typeof window.XMLHttpRequest === 'undefined')
+  if (typeof self.XMLHttpRequest === 'undefined')
     throw new Error('your browser does not support XHR loading')
 
   //IE9 and XML1 browsers could still use an override
-  var req = new window.XMLHttpRequest()
+  var req = new self.XMLHttpRequest()
   req.overrideMimeType('text/plain; charset=x-user-defined')
   return xtend({
     xhr: req
