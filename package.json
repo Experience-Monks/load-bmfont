@@ -1,6 +1,6 @@
 {
   "name": "load-bmfont",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "loads a BMFont file in Node and the browser",
   "main": "index.js",
   "browser": "browser.js",
