@@ -35,7 +35,7 @@ function parseFont(file, data, cb) {
 module.exports = function loadFont(opt, cb) {
   cb = typeof cb === 'function' ? cb : noop;
 
-  if (typeof opt === 'string') opt = { uri: opt };
+  if (typeof opt === 'string') opt = { uri: opt, url: opt };
   else if (!opt) opt = {};
 
   var file = opt.uri || opt.url;
@@ -46,7 +46,7 @@ module.exports = function loadFont(opt, cb) {
   };
 
   if (url.parse(file).host) {
-    request({ url: file, ...opt }, handleData);
+    request(opt, handleData);
   } else {
     fs.readFile(file, opt, handleData);
   }
