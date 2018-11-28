@@ -13,7 +13,7 @@ function parseFont(file, data, cb) {
   var result, binary
 
   if (isBinary(data)) {
-    if (typeof data === 'string') data = new Buffer(data, 'binary')
+    if (typeof data === 'string') data = Buffer.from(data, 'binary')
     binary = true
   } else data = data.toString().trim()
 

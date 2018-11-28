@@ -36,7 +36,7 @@ module.exports = function(opt, cb) {
     //we need to convert it into a regular Buffer object
     if (isArrayBuffer(body)) {
       var array = new Uint8Array(body)
-      body = new Buffer(array, 'binary')
+      body = Buffer.from(array, 'binary')
     }
 
     //now check the string/Buffer response
@@ -45,7 +45,7 @@ module.exports = function(opt, cb) {
       binary = true
       //if we have a string, turn it into a Buffer
       if (typeof body === 'string') 
-        body = new Buffer(body, 'binary')
+        body = Buffer.from(body, 'binary')
     } 
 
     //we are not parsing a binary format, just ASCII/XML/etc
