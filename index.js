@@ -19,9 +19,9 @@ function parseFont(file, data, cb) {
 
   try {
     if (binary) result = readBinary(data)
-    else if (/json/.test(mime.lookup(file)) || data.charAt(0) === '{')
+    else if (/json/.test(mime.getType(file)) || data.charAt(0) === '{')
       result = JSON.parse(data)
-    else if (/xml/.test(mime.lookup(file)) || data.charAt(0) === '<')
+    else if (/xml/.test(mime.getType(file)) || data.charAt(0) === '<')
       result = parseXML(data)
     else result = parseASCII(data)
   } catch (e) {
