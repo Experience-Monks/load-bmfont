@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "module": "esnext",
+      "moduleResolution": "bundler",
+      "emitDeclarationOnly": true,
+      "declaration": true,
+    },
+    "include": ["types/**/*"]
+  }
